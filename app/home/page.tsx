@@ -7,7 +7,7 @@ export default async function Home() {
     const { name } = await fetch(
         'https://openidconnect.googleapis.com/v1/userinfo',
         {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 Authorization: `Bearer ${cookieStore.get('access_token')
                     ?.value}`,

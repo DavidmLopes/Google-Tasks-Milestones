@@ -10,7 +10,7 @@ export default async function NavBar() {
     const { name, image } = await fetch(
         'https://openidconnect.googleapis.com/v1/userinfo',
         {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 Authorization: `Bearer ${cookieStore.get('access_token')
                     ?.value}`,
