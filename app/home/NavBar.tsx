@@ -7,7 +7,7 @@ import LogoutButton from '../components/LogoutButton'
 export default async function NavBar() {
     const cookieStore = cookies()
 
-    const { fullName, name, image } = await fetch(
+    const { name, image } = await fetch(
         'https://openidconnect.googleapis.com/v1/userinfo',
         {
             method: 'POST',
