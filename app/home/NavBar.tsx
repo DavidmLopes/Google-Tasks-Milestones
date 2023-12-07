@@ -2,11 +2,12 @@ import React from 'react'
 import ThemeButton from '@components/ThemeButton'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
+import LogoutButton from '../components/LogoutButton'
 
 export default async function NavBar() {
     const cookieStore = cookies()
 
-    const { name, image } = await fetch(
+    const { fullName, name, image } = await fetch(
         'https://openidconnect.googleapis.com/v1/userinfo',
         {
             method: 'POST',
@@ -20,7 +21,11 @@ export default async function NavBar() {
             return response.json()
         })
         .then((data) => {
-            return { name: data.given_name, image: data.picture }
+            return {
+                fullName: data.name,
+                name: data.given_name,
+                image: data.picture,
+            }
         })
 
     return (
@@ -39,6 +44,7 @@ export default async function NavBar() {
                 </div>
                 {name}
             </div>
+            <LogoutButton />
             <ThemeButton />
         </nav>
     )
