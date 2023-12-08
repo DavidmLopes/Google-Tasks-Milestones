@@ -31,7 +31,7 @@ export default async function NavBar() {
     return (
         <nav className="flex w-full items-center justify-end gap-4 bg-neutral-300 p-4 dark:bg-neutral-700">
             <div className="w-full text-3xl font-bold">
-                Google Tasks Milestones
+                <h1>Google Tasks Milestones</h1>
             </div>
             <div className="flex items-center gap-2 rounded-2xl bg-neutral-100 p-2 dark:bg-neutral-900">
                 <div className="relative h-8 w-8 overflow-hidden rounded-full">

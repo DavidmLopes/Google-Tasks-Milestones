@@ -6,6 +6,6 @@ export default function Login() {
             `client_id=${process.env.CLIENT_ID}` +
             '&redirect_uri=http://localhost:3000/api/callback' +
             '&response_type=code' +
-            '&scope=openid%20profile%20email',
+            '&scope=openid%20profile%20email%20https://www.googleapis.com/auth/tasks',
     )
 }
