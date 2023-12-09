@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
         'client_secret',
         process.env.CLIENT_SECRET ? process.env.CLIENT_SECRET : '',
     )
-    form.append('redirect_uri', 'http://localhost:3000/api/callback') // TODO: Maybe not good to hardcode this
+    form.append('redirect_uri', 'http://localhost:3000/api/callback/google') // TODO: Maybe not good to hardcode this
     form.append('grant_type', 'authorization_code')
 
     const { email, access_token } = await fetch(
