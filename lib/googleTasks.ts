@@ -1,4 +1,8 @@
+import { redirect } from 'next/navigation'
+
 export async function getAllTasksLists(access_token: string) {
+    await verifyToken(access_token)
+
     const items: Array<{ title: string; id: string }> = await fetch(
         'https://tasks.googleapis.com/tasks/v1/users/@me/lists',
         {
@@ -22,6 +26,8 @@ export async function getAllTasksLists(access_token: string) {
 
 export async function getAllTasks(access_token: string) {
     const tasksLists = await getAllTasksLists(access_token)
+
+    await verifyToken(access_token)
 
     const tasksPromises = tasksLists.map(async (item) => {
         const tasks: Array<{ title: string; id: string }> = await fetch(
@@ -48,4 +54,20 @@ export async function getAllTasks(access_token: string) {
     })
 
     return tasks
+}
+
+async function verifyToken(token: string) {
+    return await fetch(
+        `https://oauth2.googleapis.com/tokeninfo?access_token=${token}`,
+    )
+        .then((response) => {
+            return response.json()
+        })
+        .then((data) => {
+            if (data.expires_in !== undefined && data.expires_in > 0) {
+                return true
+            } else {
+                redirect('/logout')
+            }
+        })
 }

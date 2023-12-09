@@ -2,7 +2,7 @@ import React from 'react'
 import ThemeButton from '@components/ThemeButton'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
-import LogoutButton from '../components/LogoutButton'
+import Link from 'next/link'
 
 export default async function NavBar() {
     const cookieStore = cookies()
@@ -29,7 +29,7 @@ export default async function NavBar() {
         })
 
     return (
-        <nav className="flex w-full items-center justify-end gap-4 bg-neutral-300 p-4 dark:bg-neutral-700">
+        <nav className="flex w-full items-center justify-end gap-4 bg-neutral-400 p-4 dark:bg-neutral-700">
             <div className="w-full text-3xl font-bold">
                 <h1>Google Tasks Milestones</h1>
             </div>
@@ -45,7 +45,11 @@ export default async function NavBar() {
                 </div>
                 {name}
             </div>
-            <LogoutButton />
+            <Link href={'/logout'}>
+                <div className="h-12 rounded-2xl bg-neutral-100 px-4 font-medium leading-[48px] hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800">
+                    Logout
+                </div>
+            </Link>
             <ThemeButton />
         </nav>
     )

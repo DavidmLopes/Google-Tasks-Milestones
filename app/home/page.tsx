@@ -14,15 +14,12 @@ export default async function Home() {
 
     const tasks = await getAllTasks(accessToken)
 
-    if (githubAccessToken != '' && githubName != '') {
-        const milestones = await getAllMilestones(githubAccessToken, githubName)
-        console.log(milestones)
-    }
-
     return (
         <div>
             <div>
-                <h2 className="my-4 text-2xl font-bold">Tasks</h2>
+                <h2 className="my-4 rounded-md bg-highlights p-2 text-2xl font-bold text-black">
+                    Tasks
+                </h2>
                 <ul>
                     {tasks.map((item) => {
                         return (
@@ -42,13 +39,21 @@ export default async function Home() {
             </div>
             <hr className="my-8"></hr>
             <div>
-                <h2 className="my-4 text-2xl font-bold">Github Milestones</h2>
+                <h2 className="my-4 rounded-md bg-highlights p-2 text-2xl font-bold text-black">
+                    Github Milestones
+                </h2>
                 {githubAccessToken === '' || githubName === '' ? (
-                    <Link href={'/home/authorize'}>
-                        <div className="w-max rounded-lg bg-highlights px-6 py-2 text-center font-medium hover:bg-highlights-h">
-                            Authorize Github
+                    <div>
+                        <span className="font-bold">Note:</span> You need
+                        authorization to view milestones
+                        <div className="flex">
+                            <Link href={'/home/authorize'}>
+                                <div className="my-4 w-max rounded-lg bg-green-600 px-6 py-2 text-center font-medium hover:bg-green-700">
+                                    Authorize Github
+                                </div>
+                            </Link>
                         </div>
-                    </Link>
+                    </div>
                 ) : (
                     <ul>
                         {(
