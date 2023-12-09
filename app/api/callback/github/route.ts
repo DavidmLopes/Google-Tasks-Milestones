@@ -34,6 +34,19 @@ export async function GET(request: NextRequest) {
             return data
         })
 
+    const { name } = await fetch('https://api.github.com/user', {
+        headers: {
+            Authorization: `token ${access_token}`,
+        },
+    })
+        .then((response) => {
+            return response.json()
+        })
+        .then((data) => {
+            return { name: data.login }
+        })
+
+    cookies().set('github_name', name)
     cookies().set('github_access_token', access_token)
 
     redirect('/home')

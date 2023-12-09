@@ -6,6 +6,6 @@ export default function Login() {
             `client_id=${process.env.GITHUB_CLIENT_ID}` +
             '&redirect_uri=http://localhost:3000/api/callback/github' +
             '&response_type=code' +
-            '&scope=repo:read',
+            '&scope=repo',
     )
 }

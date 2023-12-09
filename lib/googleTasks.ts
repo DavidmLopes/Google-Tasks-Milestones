@@ -20,10 +20,9 @@ export async function getAllTasksLists(access_token: string) {
     return items
 }
 
-export async function getAllTasks(
-    access_token: string,
-    tasksLists: Array<{ title: string; id: string }>,
-) {
+export async function getAllTasks(access_token: string) {
+    const tasksLists = await getAllTasksLists(access_token)
+
     const tasksPromises = tasksLists.map(async (item) => {
         const tasks: Array<{ title: string; id: string }> = await fetch(
             `https://tasks.googleapis.com/tasks/v1/lists/${item.id}/tasks`,
