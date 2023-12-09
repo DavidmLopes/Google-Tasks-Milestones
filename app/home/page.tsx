@@ -44,8 +44,8 @@ export default async function Home() {
                 </h2>
                 {githubAccessToken === '' || githubName === '' ? (
                     <div>
-                        <span className="font-bold">Note:</span> You need
-                        authorization to view milestones
+                        <span className="font-bold">Note:</span> You need to
+                        authorize to view github milestones
                         <div className="flex">
                             <Link href={'/home/authorize'}>
                                 <div className="my-4 w-max rounded-lg bg-green-600 px-6 py-2 text-center font-medium hover:bg-green-700">

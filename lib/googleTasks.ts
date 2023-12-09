@@ -1,5 +1,24 @@
 import { redirect } from 'next/navigation'
 
+export async function getUserInfo(access_token: string) {
+    return await fetch('https://openidconnect.googleapis.com/v1/userinfo', {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${access_token}`,
+        },
+    })
+        .then((response) => {
+            return response.json()
+        })
+        .then((data) => {
+            return {
+                fullName: data.name,
+                name: data.given_name,
+                image: data.picture,
+            }
+        })
+}
+
 export async function getAllTasksLists(access_token: string) {
     await verifyToken(access_token)
 

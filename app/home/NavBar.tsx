@@ -3,30 +3,13 @@ import ThemeButton from '@components/ThemeButton'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
+import { getUserInfo } from '@/lib/googleTasks'
 
 export default async function NavBar() {
     const cookieStore = cookies()
+    const accessToken = cookieStore.get('access_token')?.value ?? ''
 
-    const { name, image } = await fetch(
-        'https://openidconnect.googleapis.com/v1/userinfo',
-        {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${cookieStore.get('access_token')
-                    ?.value}`,
-            },
-        },
-    )
-        .then((response) => {
-            return response.json()
-        })
-        .then((data) => {
-            return {
-                fullName: data.name,
-                name: data.given_name,
-                image: data.picture,
-            }
-        })
+    const { name, image } = await getUserInfo(accessToken)
 
     return (
         <nav className="flex w-full items-center justify-end gap-4 bg-neutral-400 p-4 dark:bg-neutral-700">
