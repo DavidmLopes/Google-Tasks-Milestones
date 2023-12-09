@@ -37,7 +37,8 @@ export default async function NavBar() {
                 <div className="relative h-8 w-8 overflow-hidden rounded-full">
                     <Image
                         src={image}
-                        fill
+                        width={32}
+                        height={32}
                         style={{ objectFit: 'cover' }}
                         alt={'Image'}
                     />
