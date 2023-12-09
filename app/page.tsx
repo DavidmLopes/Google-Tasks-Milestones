@@ -3,7 +3,7 @@ import ThemeButton from '@components/ThemeButton'
 
 export default function Home() {
     return (
-        <div className="flex h-screen w-full flex-col items-center justify-center gap-5">
+        <div className="flex h-[100svh] w-full flex-col items-center justify-center gap-5">
             <ThemeButton />
             <div className="text-center text-4xl font-medium">
                 Google Taks Milestones
