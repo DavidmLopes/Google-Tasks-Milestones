@@ -12,7 +12,7 @@ export default async function NavBar() {
     const { name, image } = await getUserInfo(accessToken)
 
     return (
-        <nav className="flex w-full items-center justify-end gap-4 bg-neutral-400 p-4 dark:bg-neutral-700">
+        <nav className="flex w-full items-center justify-end gap-4 bg-neutral-400 p-4 dark:bg-neutral-600">
             <div className="w-full text-3xl font-bold">
                 <h1>Google Tasks Milestones</h1>
             </div>

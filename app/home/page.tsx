@@ -1,18 +1,16 @@
 import React from 'react'
 import { cookies } from 'next/headers'
-import { getAllTasks } from '@lib/googleTasks'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { getAllMilestones } from '@/lib/github'
+import Tasks from '@components/Tasks'
+import Milestones from '../components/Milestones'
 
-export default async function Home() {
+export default function Home() {
     const cookieStore = cookies()
     const accessToken = cookieStore.get('access_token')?.value ?? redirect('/')
     const githubAccessToken =
         cookieStore.get('github_access_token')?.value ?? ''
     const githubName = cookieStore.get('github_name')?.value ?? ''
-
-    const tasks = await getAllTasks(accessToken)
 
     return (
         <div>
@@ -20,22 +18,7 @@ export default async function Home() {
                 <h2 className="my-4 rounded-md bg-highlights p-2 text-2xl font-bold text-black">
                     Tasks
                 </h2>
-                <ul>
-                    {tasks.map((item) => {
-                        return (
-                            <li key={item.id}>
-                                <h3 className="font-bold">{item.title}</h3>
-                                <ul className="indent-4">
-                                    {item.tasks.map((task) => {
-                                        return (
-                                            <li key={task.id}>{task.title}</li>
-                                        )
-                                    })}
-                                </ul>
-                            </li>
-                        )
-                    })}
-                </ul>
+                <Tasks google={{ accessToken: accessToken }} />
             </div>
             <hr className="my-8"></hr>
             <div>
@@ -55,33 +38,10 @@ export default async function Home() {
                         </div>
                     </div>
                 ) : (
-                    <ul>
-                        {(
-                            await getAllMilestones(
-                                githubAccessToken,
-                                githubName,
-                            )
-                        ).map((repo) => {
-                            return (
-                                <li key={repo.id}>
-                                    <h3 className="font-bold">{repo.name}</h3>
-                                    <ul className="indent-4">
-                                        {repo.milestones.length === 0 ? (
-                                            <li>Empty</li>
-                                        ) : (
-                                            repo.milestones.map((milestone) => {
-                                                return (
-                                                    <li key={milestone.title}>
-                                                        {milestone.title}
-                                                    </li>
-                                                )
-                                            })
-                                        )}
-                                    </ul>
-                                </li>
-                            )
-                        })}
-                    </ul>
+                    <Milestones
+                        google={{ accessToken: accessToken }}
+                        github={{ githubAccessToken, githubName }}
+                    />
                 )}
             </div>
         </div>
