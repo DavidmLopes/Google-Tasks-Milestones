@@ -4,13 +4,21 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import Tasks from '@components/Tasks'
 import Milestones from '../components/Milestones'
+import { pdp } from '@/lib/casbin'
 
-export default function Home() {
+export default async function Home() {
     const cookieStore = cookies()
     const accessToken = cookieStore.get('access_token')?.value ?? redirect('/')
     const githubAccessToken =
         cookieStore.get('github_access_token')?.value ?? ''
     const githubName = cookieStore.get('github_name')?.value ?? ''
+
+    const permission = await pdp('alice', 'data1', 'read')
+    if (permission.res) {
+        console.log('Permission granted')
+    } else {
+        console.log('Permission denied')
+    }
 
     return (
         <div>
@@ -44,6 +52,7 @@ export default function Home() {
                     />
                 )}
             </div>
+            <div>Hello</div>
         </div>
     )
 }
