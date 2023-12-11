@@ -34,3 +34,23 @@ export async function addPremium(email: string) {
     await enforcer.addRoleForUser(email, 'premium')
     await enforcer.savePolicy()
 }
+
+export async function removePremium(email: string) {
+    const enforcer = await newEnforcer(
+        './basic_model.conf',
+        './basic_policy.csv',
+    )
+
+    await enforcer.deleteRoleForUser(email, 'premium')
+    await enforcer.addRoleForUser(email, 'free')
+    await enforcer.savePolicy()
+}
+
+export async function getRole(email: string) {
+    const enforcer = await newEnforcer(
+        './basic_model.conf',
+        './basic_policy.csv',
+    )
+    const roles = await enforcer.getRolesForUser(email)
+    return roles.length == 0 ? '' : roles[0] // TODO: handle not having role
+}

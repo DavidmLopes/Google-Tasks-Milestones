@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { getPremium } from './actionAddPremium'
+import { getPremium } from './actionPremium'
 
 export default function AddPremium({ email }: { email: string }) {
     async function action(dataForm: FormData) {
