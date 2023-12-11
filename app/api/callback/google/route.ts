@@ -2,6 +2,7 @@ import { type NextRequest } from 'next/server'
 import { cookies } from 'next/headers'
 import jwt from 'jsonwebtoken'
 import { redirect } from 'next/navigation'
+import { createUser } from '@/lib/casbin'
 
 export async function GET(request: NextRequest) {
     const code = request.nextUrl.searchParams.get('code') ?? ''
@@ -33,6 +34,8 @@ export async function GET(request: NextRequest) {
                 access_token: data.access_token,
             }
         })
+
+    await createUser(email)
 
     cookies().set('email', email)
     cookies().set('access_token', access_token)

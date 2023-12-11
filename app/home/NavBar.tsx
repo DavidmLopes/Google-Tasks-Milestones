@@ -4,10 +4,12 @@ import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getUserInfo } from '@/lib/googleTasks'
+import AddPremium from './AddPremium'
 
 export default async function NavBar() {
     const cookieStore = cookies()
     const accessToken = cookieStore.get('access_token')?.value ?? ''
+    const email = cookieStore.get('email')?.value ?? ''
 
     const { name, image } = await getUserInfo(accessToken)
 
@@ -28,6 +30,7 @@ export default async function NavBar() {
                 </div>
                 {name}
             </div>
+            <AddPremium email={email} />
             <Link href={'/logout'}>
                 <div className="h-12 rounded-2xl bg-neutral-100 px-4 font-medium leading-[48px] hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800">
                     Logout

@@ -1,2 +1,5 @@
-p, alice, data1, read
-p, bob, data2, write
+p, free, tasks, read
+p, premium, tasks, write
+p, premium, milestones, read
+g, premium, free
+g, admin, premium
