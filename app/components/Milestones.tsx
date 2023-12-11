@@ -2,15 +2,18 @@ import { getAllMilestones } from '@/lib/github'
 import React from 'react'
 import AddTaskForm from './AddTaskForm'
 import { getAllTaskLists } from '@/lib/googleTasks'
+import { pdp } from '@/lib/casbin'
 
 export default async function Milestones({
     google,
     github,
 }: {
-    google: { accessToken: string }
+    google: { email: string; accessToken: string }
     github: { githubAccessToken: string; githubName: string }
 }) {
     const taskLists = await getAllTaskLists(google.accessToken)
+
+    const pAddTask = await pdp(google.email, 'tasks', 'write')
 
     return (
         <ul>
@@ -37,14 +40,16 @@ export default async function Milestones({
                                             className="my-1 flex items-center justify-between rounded-md bg-neutral-100 p-2 dark:bg-neutral-900"
                                         >
                                             {milestone.title}
-                                            <AddTaskForm
-                                                google={{
-                                                    accessToken:
-                                                        google.accessToken,
-                                                }}
-                                                name={milestone.title}
-                                                taskLists={taskLists}
-                                            />
+                                            {pAddTask.res && (
+                                                <AddTaskForm
+                                                    google={{
+                                                        accessToken:
+                                                            google.accessToken,
+                                                    }}
+                                                    name={milestone.title}
+                                                    taskLists={taskLists}
+                                                />
+                                            )}
                                         </li>
                                     )
                                 })}
