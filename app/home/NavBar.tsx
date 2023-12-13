@@ -7,15 +7,16 @@ import { getUserInfo } from '@/lib/googleTasks'
 import AddPremium from './components/AddPremium'
 import { getRole } from '@/lib/casbin'
 import RemovePremium from './components/RemovePremium'
+import { getUser } from '@/lib/users'
 
 export default async function NavBar() {
     const cookieStore = cookies()
-    const accessToken = cookieStore.get('access_token')?.value ?? ''
-    const email = cookieStore.get('email')?.value ?? ''
+    const userToken = cookieStore.get('userToken')?.value ?? ''
+    const user = await getUser(userToken)
 
-    const { name, image } = await getUserInfo(accessToken)
+    const { name, image } = await getUserInfo(user.accessToken)
 
-    const role = await getRole(email)
+    const role = await getRole(user.email)
 
     return (
         <nav className="flex w-full items-center justify-end gap-4 bg-neutral-400 p-4 dark:bg-neutral-600">
@@ -35,9 +36,9 @@ export default async function NavBar() {
                 {name + ' ( ' + role + ' )'}
             </div>
             {role === 'premium' ? (
-                <RemovePremium email={email} />
+                <RemovePremium email={user.email} />
             ) : (
-                <AddPremium email={email} />
+                <AddPremium email={user.email} />
             )}
             <Link href={'/logout'}>
                 <div className="h-12 rounded-2xl bg-neutral-100 px-4 font-medium leading-[48px] hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800">

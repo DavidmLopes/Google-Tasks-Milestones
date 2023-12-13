@@ -1,6 +1,7 @@
 import { type NextRequest } from 'next/server'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { addGithub } from '@/lib/users'
 
 export async function GET(request: NextRequest) {
     const code = request.nextUrl.searchParams.get('code') ?? ''
@@ -46,8 +47,8 @@ export async function GET(request: NextRequest) {
             return { name: data.login }
         })
 
-    cookies().set('github_name', name)
-    cookies().set('github_access_token', access_token)
+    const userToken = cookies().get('userToken')?.value ?? ''
+    await addGithub(userToken, name, access_token)
 
     redirect('/home')
 }

@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-    const access_token = request.cookies.get('access_token')
+    const userToken = request.cookies.get('userToken')
 
-    if (!access_token) {
+    if (!userToken) {
         return NextResponse.redirect(new URL('/', request.url))
     }
 }
